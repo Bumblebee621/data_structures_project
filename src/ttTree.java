@@ -116,7 +116,91 @@ public class ttTree<T extends Comparable<T>> {
        return y;
     }
     public void insert( TreeNode<T> z) {
-
+        TreeNode<T> y = root;
+        while (!y.isALeaf()){
+            if(z.getKey().compareTo(y.getLeft().getKey()) < 0){
+                y = y.getLeft();
+            } else if(z.getKey().compareTo(y.getMid().getKey()) < 0){
+                y = y.getMid();
+            } else {
+                y = y.getRight();
+            }
+        }
+        TreeNode<T> x = y.getParent();
+        z = insertAndSplit(x,z);
+        while(x != root){
+            x = x.getParent();
+            if (z != null){
+                z = insertAndSplit(x,z);
+            } else{
+                updateKey(x);
+            }
+        }
+        if (z != null){
+            TreeNode<T> w = new TreeNode<>();
+            setChildren(w, x, z, null);
+            root = w;
+        }
     }
-
+    public TreeNode<T> borrowOrMerge(TreeNode<T> y){
+        TreeNode<T> z = y.getParent();
+        TreeNode<T> x;
+        if (y.equals(z.getLeft())){
+            x = z.getMid();
+            //borrowing sequence
+            if(x.getRight() != null){
+                setChildren(y, y.getLeft(), x.getLeft(), null);
+                setChildren(x, x.getMid(), x.getRight(), null);
+            }
+            //merging sequence
+            else {
+                setChildren(x, y.getLeft(), x.getLeft(), x.getMid());
+                setChildren(z, x, z.getRight(), null);
+            }
+            return z;
+        } if (y.equals(z.getMid())) {
+            x = z.getLeft();
+            if (x.getRight() != null){
+                setChildren(y, x.getRight(), y.getLeft(), null);
+                setChildren(x, x.getLeft(), x.getMid(), null);
+            } else {
+                setChildren(x, x.getLeft(), x.getMid(), y.getLeft());
+                setChildren(z, x, z.getRight(), null);
+            }
+            return z;
+        }
+        x = z.getMid();
+        if (x.getRight() != null){
+            setChildren(y, x.getRight(), y.getLeft(), null);
+            setChildren(x, x.getLeft(), x.getMid(), null);
+        } else {
+            setChildren(x, x.getLeft(), x.getMid(), y.getLeft());
+            setChildren(z, z.getLeft(), x, null);
+        }
+        return z;
+    }
+    public void delete(TreeNode<T> x) {
+        TreeNode<T> y = x.getParent();
+        if (x.equals(y.getLeft())){
+            setChildren(y, y.getMid(), y.getRight(), null);
+        } else if (x.equals(y.getMid())){
+            setChildren(y, y.getLeft(), y.getRight(), null);
+        }else {
+            setChildren(y, y.getLeft(), y.getMid(), null);
+        }
+        while (y != null){
+            if (y.getMid()!=null){
+                updateKey(y);
+                y = y.getParent();
+            } else {
+                if (y != root){
+                    y = borrowOrMerge(y);
+                } else {
+                    root = y.getLeft();
+                    y.getLeft().setParent(null);
+                    return;
+                }
+            }
+        }
+    }
 }
