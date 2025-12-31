@@ -115,7 +115,7 @@ public class DKNTree<P, V extends Comparable<V>> {
         }
         return y;
     }
-    public void insert( DoubleKeyNode<P,V> z) {
+    public void insert(DoubleKeyNode<P,V> z) {
         DoubleKeyNode<P,V> y = root;
         while (!y.isALeaf()){
             if(z.getValue().compareTo(y.getLeft().getValue()) < 0){
