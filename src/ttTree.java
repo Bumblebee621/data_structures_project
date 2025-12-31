@@ -29,7 +29,6 @@ public class ttTree<T extends Comparable<T>> {
         }
         return search(node.getRight(), key);
     }
-
     public TreeNode<T> minimum() {
         TreeNode<T> x = root;
         while (!x.isALeaf()) {
@@ -62,7 +61,6 @@ public class ttTree<T extends Comparable<T>> {
         }
         return null;
     }
-
     public void updateKey(TreeNode<T> x) {
         x.setKey(x.getLeft().getKey());
         if(x.getMid() != null){
@@ -202,5 +200,8 @@ public class ttTree<T extends Comparable<T>> {
                 }
             }
         }
+    }
+    public TreeNode<T> getRoot() {
+        return root;
     }
 }

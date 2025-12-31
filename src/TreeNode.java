@@ -1,17 +1,18 @@
 public class TreeNode<T extends Comparable<T>> {
-
-
-    private TreeNode<T> left;
-    private TreeNode<T> mid;
-    private TreeNode<T> right;
-    private TreeNode<T> parent;
-    private T key;
+    protected TreeNode<T> left;
+    protected TreeNode<T> mid;
+    protected TreeNode<T> right;
+    protected TreeNode<T> parent;
+    protected T key;
 
     public TreeNode() {
         this(null, null, null, null, null);
     }
     public TreeNode(TreeNode<T> parent, T key) {
         this(null, null,null, parent, key);
+    }
+    public TreeNode(T key) {
+        this(null, null,null, null, key);
     }
     public TreeNode(TreeNode<T> left, TreeNode<T> mid, TreeNode<T> right, TreeNode<T> parent, T key) {
         this.left = left;
@@ -20,7 +21,6 @@ public class TreeNode<T extends Comparable<T>> {
         this.parent = parent;
         this.key = key;
     }
-
     public boolean isALeaf() {
         return left == null;
     }
