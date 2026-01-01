@@ -29,6 +29,10 @@ public class DoubleValueNode<P,Vs extends Comparable<Vs>, Vi extends Comparable<
         this.parents = null;
     }
 
+    public DoubleValueNode(P person, String s){
+
+    }
+
     public boolean isALeafi() {
         return lefti == null;
     }

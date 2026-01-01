@@ -1,23 +1,27 @@
-public class ClinicManagerDKN {
+public class ClinicManagerDVN {
     public static final String MIN_ID = "";
     public static final String MAX_ID = "\uFFFF\uFFFF\uFFFF\uFFFF";
     public static final int MIN_num = 0;
     public static final int MAX_num = 2 ^ 32 - 1;
-    private DKNTree<Doctor, String> doctorsTree;
-    private DKNTree<Doctor, Integer> popularityTree;
-    private DKNTree<Patient, String> patients;
+    private DVNTreeS<Doctor, String, Integer> doctorsTree;
+    private DVNTreeI<Doctor, String ,Integer> popularityTree;
+    private DVNTreeS<Patient, String, Integer> patients;
 
-    public ClinicManagerDKN() {
-        doctorsTree = new DKNTree<>(MIN_ID, MAX_ID);
-        popularityTree = new DKNTree<>(MIN_num, MAX_num);
-        patients = new DKNTree<>(MIN_ID,MAX_ID);
+    public ClinicManagerDVN() {
+        doctorsTree = new DVNTreeS<>(MIN_ID, MAX_ID);
+        popularityTree = new DVNTreeI<>(MIN_num, MAX_num);
+        patients = new DVNTreeS<>(MIN_ID,MAX_ID);
     }
 
     public void doctorEnter(String doctorId) {
         if(doctorsTree.search(doctorsTree.getRoot(), doctorId) != null){
             throw new IllegalArgumentException();
         }else{
-            DoubleKeyNode<>
+            Doctor d = new Doctor(doctorId);
+            DoubleKeyNode<Doctor, String> ds = new DoubleKeyNode<>(d, doctorId);
+            DoubleKeyNode<Doctor, Integer> di = new DoubleKeyNode<>(d, 0);
+            doctorsTree.insert(ds);
+            popularityTree.insert(di);
             //fuck
         }
 
