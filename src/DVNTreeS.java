@@ -1,66 +1,71 @@
-public class DVNTreeS<P, Vs extends Comparable<Vs>, Vi extends Comparable<Vi>> extends DVNTree<P, Vs, Vi, Vs> {
+public class DVNTreeS<P> extends DVNTree<P, String> {
 
-    public DVNTreeS(Vs leftSentinelValue, Vs rightSentinelValue) {
+    public DVNTreeS(String leftSentinelValue, String rightSentinelValue) {
         super(leftSentinelValue, rightSentinelValue);
     }
 
     @Override
-    protected DoubleValueNode<P, Vs, Vi> createSentinel(Vs value) {
-        return new DoubleValueNode<>(null, value, null);
+    protected DoubleValueNode<P> createSentinel(String value) {
+        return new DoubleValueNode<>(null, value, 0); // value is String id, num is 0
     }
 
     @Override
-    protected DoubleValueNode<P, Vs, Vi> getLeft(DoubleValueNode<P, Vs, Vi> node) {
-        return node.getLefts();
+    protected DoubleValueNode<P> getLeft(DoubleValueNode<P> node) {
+        return node.getLeftById();
     }
 
     @Override
-    protected DoubleValueNode<P, Vs, Vi> getMid(DoubleValueNode<P, Vs, Vi> node) {
-        return node.getMids();
+    protected DoubleValueNode<P> getMid(DoubleValueNode<P> node) {
+        return node.getMidById();
     }
 
     @Override
-    protected DoubleValueNode<P, Vs, Vi> getRight(DoubleValueNode<P, Vs, Vi> node) {
-        return node.getRights();
+    protected DoubleValueNode<P> getRight(DoubleValueNode<P> node) {
+        return node.getRightById();
     }
 
     @Override
-    protected DoubleValueNode<P, Vs, Vi> getParent(DoubleValueNode<P, Vs, Vi> node) {
-        return node.getParents();
+    protected DoubleValueNode<P> getParent(DoubleValueNode<P> node) {
+        return node.getParentById();
     }
 
     @Override
-    protected Vs getKey(DoubleValueNode<P, Vs, Vi> node) {
-        return node.getId();
+    protected String getKey(DoubleValueNode<P> node) {
+        return node.getIdentifier();
     }
 
     @Override
-    protected boolean isALeaf(DoubleValueNode<P, Vs, Vi> node) {
-        return node.isALeafs();
+    protected boolean isALeaf(DoubleValueNode<P> node) {
+        return node.isALeafById();
     }
 
     @Override
-    protected void setLeft(DoubleValueNode<P, Vs, Vi> node, DoubleValueNode<P, Vs, Vi> child) {
-        node.setLefts(child);
+    protected void setLeft(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+        node.setLeftById(child);
     }
 
     @Override
-    protected void setMid(DoubleValueNode<P, Vs, Vi> node, DoubleValueNode<P, Vs, Vi> child) {
-        node.setMids(child);
+    protected void setMid(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+        node.setMidById(child);
     }
 
     @Override
-    protected void setRight(DoubleValueNode<P, Vs, Vi> node, DoubleValueNode<P, Vs, Vi> child) {
-        node.setRights(child);
+    protected void setRight(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+        node.setRightById(child);
     }
 
     @Override
-    protected void setParent(DoubleValueNode<P, Vs, Vi> node, DoubleValueNode<P, Vs, Vi> parent) {
-        node.setParents(parent);
+    protected void setParent(DoubleValueNode<P> node, DoubleValueNode<P> parent) {
+        node.setParentById(parent);
     }
 
     @Override
-    protected void setKey(DoubleValueNode<P, Vs, Vi> node, Vs key) {
-        node.setId(key);
+    protected void setKey(DoubleValueNode<P> node, String key) {
+        node.setIdentifier(key);
+    }
+
+    @Override
+    protected void updateStats(DoubleValueNode<P> node) {
+        // No statistics maintenance needed for String tree
     }
 }

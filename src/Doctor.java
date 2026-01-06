@@ -1,15 +1,18 @@
 public class Doctor {
     private final String doctorId;
-    private WaitingRoom wr;
+    private DVNTreeI queue;
+    private int lastestNum;
 
-    public Doctor(String doctorId) {
+
+    public Doctor(String doctorId, Integer leftSentinelValue, Integer rightSentinelValue) {
         this.doctorId = doctorId;
-        wr = new WaitingRoom();
+        queue = new DVNTreeI(leftSentinelValue, rightSentinelValue);
+        lastestNum = 0;
     }
     public String getId(){
         return this.doctorId;
     }
-    public WaitingRoom getWaitingRoom(){
-        return wr;
+    public DVNTreeI getQueue(){
+        return queue;
     }
 }
