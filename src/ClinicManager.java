@@ -20,14 +20,7 @@ public class ClinicManager {
             throw new IllegalArgumentException();
         }else{
             Doctor d = new Doctor(doctorId);
-            // Insert to doctorsTree (String key). value is 0 (unused)
-            DoubleValueNode<Doctor> ds = new DoubleValueNode<>(d, doctorId, 0);
-            doctorsTree.insert(ds);
 
-            // Insert to popularityTree (Integer key, with timestamp). identifier is null (unused)
-            DoubleValueNode<Doctor> di = new DoubleValueNode<>(d, null, 0, globalTimestamp++);
-            popularityTree.insert(di);
-            //fuck
         }
 
 
