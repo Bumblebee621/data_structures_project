@@ -4,68 +4,43 @@ public class DVNTreeS<P> extends DVNTree<P, String> {
         super(leftSentinelValue, rightSentinelValue);
     }
 
-    @Override
-    protected DoubleValueNode<P> createSentinel(String value) {
-        return new DoubleValueNode<>(null, value, 0); // value is String id, num is 0
+    protected Node<P> createSentinel(String value) {
+        return new Node<>(null, value, 0, -1); // value is String id, num is 0
     }
-
-    @Override
-    protected DoubleValueNode<P> getLeft(DoubleValueNode<P> node) {
+    protected Node<P> getLeft(Node<P> node) {
         return node.getLeftById();
     }
-
-    @Override
-    protected DoubleValueNode<P> getMid(DoubleValueNode<P> node) {
+    protected Node<P> getMid(Node<P> node) {
         return node.getMidById();
     }
-
-    @Override
-    protected DoubleValueNode<P> getRight(DoubleValueNode<P> node) {
+    protected Node<P> getRight(Node<P> node) {
         return node.getRightById();
     }
-
-    @Override
-    protected DoubleValueNode<P> getParent(DoubleValueNode<P> node) {
+    protected Node<P> getParent(Node<P> node) {
         return node.getParentById();
     }
-
-    @Override
-    protected String getKey(DoubleValueNode<P> node) {
+    protected String getKey(Node<P> node) {
         return node.getIdentifier();
     }
-
-    @Override
-    protected boolean isALeaf(DoubleValueNode<P> node) {
+    protected boolean isALeaf(Node<P> node) {
         return node.isALeafById();
     }
-
-    @Override
-    protected void setLeft(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+    protected void setLeft(Node<P> node, Node<P> child) {
         node.setLeftById(child);
     }
-
-    @Override
-    protected void setMid(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+    protected void setMid(Node<P> node, Node<P> child) {
         node.setMidById(child);
     }
-
-    @Override
-    protected void setRight(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+    protected void setRight(Node<P> node, Node<P> child) {
         node.setRightById(child);
     }
-
-    @Override
-    protected void setParent(DoubleValueNode<P> node, DoubleValueNode<P> parent) {
+    protected void setParent(Node<P> node, Node<P> parent) {
         node.setParentById(parent);
     }
-
-    @Override
-    protected void setKey(DoubleValueNode<P> node, String key) {
+    protected void setKey(Node<P> node, String key) {
         node.setIdentifier(key);
     }
-
-    @Override
-    protected void updateStats(DoubleValueNode<P> node) {
+    protected void updateStats(Node<P> node) {
         // No statistics maintenance needed for String tree
     }
 }

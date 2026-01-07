@@ -7,7 +7,7 @@ public class ClinicManager {
     private DVNTreeS<Doctor> doctorsTree;
     private DVNTreeI<Doctor> popularityTree;
     private DVNTreeS<Patient> patients;
-    private int globalTimestamp = 0;
+    private int globalInsertionTime = 0;
 
     public ClinicManager() {
         doctorsTree = new DVNTreeS<>(MIN_ID, MAX_ID);
@@ -19,84 +19,101 @@ public class ClinicManager {
         if(doctorsTree.search(doctorsTree.getRoot(), doctorId) != null){
             throw new IllegalArgumentException();
         }else{
-            Doctor d = new Doctor(doctorId);
-
-        }
-
-
-        if (doctorsTree.search(doctorsTree.getRoot(), doctorId) == null) {
-            Clinic c1 = new Clinic(doctorId);
-            doctorsTree.insert(new StringDocNode<>(c1));
-            
-            IntDocNode<Doctor> intNode = new IntDocNode<>(c1);
-            intNode.setInsertionTime(globalTimestamp++); // Renamed setter
-            popularityTree.insert(intNode);
-        } else {
-            //throw exception
+            Doctor d = new Doctor(doctorId, MIN_num, MAX_num);
+            Node<Doctor> dNode = new Node<>(d, d.getId(), 0, globalInsertionTime++);
+            doctorsTree.insert(dNode);
+            popularityTree.insert(dNode);
         }
     }
 
     public void doctorLeave(String doctorId) {
-        StringDocNode<Doctor> docNode = (StringDocNode<Doctor>)doctorsTree.search(doctorsTree.getRoot(), doctorId);
-        if (docNode == null) {
-            //throw exeption
-        } else if(docNode.getClinic().getAmountInLine() != 0){
-            //throw exeption
+        Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
+        if(dNode == null){
+            throw new IllegalArgumentException();
         } else{
-            doctorsTree.delete(docNode);
-            // Search in popularityTree 
-            IntDocNode<Doctor> intdocNode = findNodeInPopularityTree(docNode.getClinic().getAmountInLine(), doctorId);
-            if (intdocNode != null) {
-                popularityTree.delete(intdocNode);
-            }
+            doctorsTree.delete(dNode);
+            popularityTree.delete(dNode);
         }
-    }
-    
-    // Helper to find node in popularityTree
-    private IntDocNode<Doctor> findNodeInPopularityTree(int load, String doctorId) {
-        // Start from min timestamp for this load
-        DoubleValueNode<Doctor> node = popularityTree.findMinTimeStamp(load);
-        while (node != null && node.getValue() == load) { // getNum() -> getValue()
-            // Check if this node belongs to doctorId.
-            if (node.getPerson() != null && node.getPerson().getId().equals(doctorId)) {
-                return (IntDocNode<Doctor>) node; 
-            }
-            // Move to successor
-            node = popularityTree.successor(node);
-        }
-        return null;
     }
 
     public void patientEnter(String doctorId, String patientId) {
-        StringDocNode<Doctor> docNode = (StringDocNode<Doctor>)doctorsTree.search(doctorsTree.getRoot(), doctorId);
-        StringPatientNode<Patient> pNode = (StringPatientNode<Patient>)patients.search(patients.getRoot(), patientId);
-        if(docNode == null || pNode != null){
-            //throw exception
-        }else {
-            Patient p1 = new Patient(patientId, docNode.getClinic().getDoc(), docNode.getClinic().getAmountInLine() + 1);
-            StringPatientNode<Patient> sPatient = new StringPatientNode<Patient>();
-            // ...
+        if (doctorsTree.search(doctorsTree.getRoot(), doctorId) == null ||
+                patients.search(patients.getRoot(), patientId) != null){
+            throw new IllegalArgumentException();
+        } else {
+            Doctor d = doctorsTree.search(doctorsTree.getRoot(), doctorId).getPerson();
+            Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
+            Patient p = new Patient(patientId, d);
+            Node<Patient> pNode = new Node<>(p, patientId, d.getAndPlusLastestNum(), 0);
+            patients.insert(pNode);
+            d.getQueue().insert(pNode);
+            updatePopularityTree(dNode);
+            if(dNode.getValue() == 0 ){
+              dNode.getPerson().setNextPatientId(patientId);
+            }
         }
     }
 
     public String nextPatientLeave(String doctorId) {
-        return null;
+        Node<Doctor> doctorNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
+        if (doctorNode == null) {
+            throw new IllegalArgumentException();
+        } else {
+            Node<Patient> pNode = doctorNode.getPerson().getQueue().minimum();
+            doctorNode.getPerson().getQueue().delete(pNode);
+            doctorNode.setValue(doctorNode.getValue()-1);
+            updatePopularityTree(doctorNode);
+            if (doctorNode.getValue() == 0) {
+                doctorNode.getPerson().setNextPatientId(null);
+            } else{
+                Node<Patient> nextPatientNode = doctorNode.getPerson().getQueue().minimum();
+                doctorNode.getPerson().setNextPatientId(nextPatientNode.getPerson().getPatientId());
+            }
+            return pNode.getPerson().getPatientId();
+        }
     }
 
     public void patientLeaveEarly(String patientId) {
+        Node<Patient> pNode = patients.search(patients.getRoot(), patientId);
+        if(pNode == null){
+            throw new IllegalArgumentException();
+        } else {
+            Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), pNode.getPerson().getDoctorId());
+            dNode.setValue(dNode.getValue()-1);
+            updatePopularityTree(dNode);
+            if(dNode.getPerson().getNextPatientId().equals( patientId)){
+                Node<Patient> nextPatientNode = dNode.getPerson().getQueue().minimum();
+                dNode.getPerson().setNextPatientId(nextPatientNode.getPerson().getPatientId());
+            }
+            patients.delete(pNode);
+        }
 
     }
 
     public int numPatients(String doctorId) {
-        return 0;
+        Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
+        if(dNode == null){
+            throw new IllegalArgumentException();
+        } else {
+            return dNode.getValue();
+        }
     }
 
     public String nextPatient(String doctorId) {
-        return null;
+        Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
+        if(dNode.getPerson().getNextPatientId() == null){
+            throw new IllegalArgumentException();
+        }
+        return dNode.getPerson().getNextPatientId();
     }
 
     public String waitingForDoctor(String patientId) {
-        return null;
+        Node<Patient> pNode = patients.search(patients.getRoot(), patientId);
+        if(pNode == null){
+            throw new IllegalArgumentException();
+        } else {
+            return pNode.getPerson().getDoctorId();
+        }
     }
 
     public int numDoctorsWithLoadInRange(int low, int high) {
@@ -107,7 +124,10 @@ public class ClinicManager {
         return popularityTree.averageLoadWithinRange(low, high);
     }
 
-    public void updatePopularityTree(String doctorId){
-        // ...
+    public void updatePopularityTree(Node<Doctor> dNode){
+        globalInsertionTime++;
+        dNode.setInsertionTime(globalInsertionTime);
+        popularityTree.delete(dNode);
+        popularityTree.insert(dNode);
     }
 }

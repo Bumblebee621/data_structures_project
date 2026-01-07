@@ -4,78 +4,53 @@ public class DVNTreeI<P> extends DVNTree<P, LoadKey> {
         super(new LoadKey(leftSentinelValue, Integer.MIN_VALUE), new LoadKey(rightSentinelValue, Integer.MAX_VALUE));
     }
 
-    @Override
-    protected DoubleValueNode<P> createSentinel(LoadKey value) {
-        return new DoubleValueNode<>(null, null, value.getNum(), value.getTimeStamp());
+    protected Node<P> createSentinel(LoadKey value) {
+        return new Node<>(null, null, value.getNum(), value.getTimeStamp());
     }
-
-    @Override
-    protected DoubleValueNode<P> getLeft(DoubleValueNode<P> node) {
+    protected Node<P> getLeft(Node<P> node) {
         return node.getLeftByValue();
     }
-
-    @Override
-    protected DoubleValueNode<P> getMid(DoubleValueNode<P> node) {
+    protected Node<P> getMid(Node<P> node) {
         return node.getMidByValue();
     }
-
-    @Override
-    protected DoubleValueNode<P> getRight(DoubleValueNode<P> node) {
+    protected Node<P> getRight(Node<P> node) {
         return node.getRightByValue();
     }
-
-    @Override
-    protected DoubleValueNode<P> getParent(DoubleValueNode<P> node) {
+    protected Node<P> getParent(Node<P> node) {
         return node.getParentByValue();
     }
-
-    @Override
-    protected LoadKey getKey(DoubleValueNode<P> node) {
+    protected LoadKey getKey(Node<P> node) {
         return new LoadKey(node.getValue(), node.getInsertionTime());
     }
-
-    @Override
-    protected boolean isALeaf(DoubleValueNode<P> node) {
+    protected boolean isALeaf(Node<P> node) {
         return node.isALeafByValue();
     }
-
-    @Override
-    protected void setLeft(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+    protected void setLeft(Node<P> node, Node<P> child) {
         node.setLeftByValue(child);
     }
-
-    @Override
-    protected void setMid(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+    protected void setMid(Node<P> node, Node<P> child) {
         node.setMidByValue(child);
     }
-
-    @Override
-    protected void setRight(DoubleValueNode<P> node, DoubleValueNode<P> child) {
+    protected void setRight(Node<P> node, Node<P> child) {
         node.setRightByValue(child);
     }
-
-    @Override
-    protected void setParent(DoubleValueNode<P> node, DoubleValueNode<P> parent) {
+    protected void setParent(Node<P> node, Node<P> parent) {
         node.setParentByValue(parent);
     }
-
-    @Override
-    protected void setKey(DoubleValueNode<P> node, LoadKey key) {
+    protected void setKey(Node<P> node, LoadKey key) {
         node.setValue(key.getNum());
         node.setInsertionTime(key.getTimeStamp());
     }
-
-    @Override
-    protected void updateStats(DoubleValueNode<P> node) {
+    protected void updateStats(Node<P> node) {
         if (isALeaf(node)) {
             node.setLeafCount(1);
             node.setSubtreeValueSum(node.getValue());
         } else {
             int size = 0;
             long sum = 0;
-            DoubleValueNode<P> l = getLeft(node);
-            DoubleValueNode<P> m = getMid(node);
-            DoubleValueNode<P> r = getRight(node);
+            Node<P> l = getLeft(node);
+            Node<P> m = getMid(node);
+            Node<P> r = getRight(node);
 
             if (l != null) {
                 size += l.getLeafCount();
@@ -96,16 +71,16 @@ public class DVNTreeI<P> extends DVNTree<P, LoadKey> {
     
     // Requested functions
     
-    public DoubleValueNode<P> findMinTimeStamp(int num) {
+    public Node<P> findMinTimeStamp(int num) {
         return findNodeWithNum(num, true);
     }
 
-    public DoubleValueNode<P> findMaxTimeStamp(int num) {
+    public Node<P> findMaxTimeStamp(int num) {
         return findNodeWithNum(num, false);
     }
     
-    private DoubleValueNode<P> findNodeWithNum(int num, boolean findMin) {
-        DoubleValueNode<P> node = getRoot();
+    private Node<P> findNodeWithNum(int num, boolean findMin) {
+        Node<P> node = getRoot();
         LoadKey target = new LoadKey(num, findMin ? Integer.MIN_VALUE : Integer.MAX_VALUE);
         
         while (!isALeaf(node)) {
@@ -148,12 +123,12 @@ public class DVNTreeI<P> extends DVNTree<P, LoadKey> {
     }
 
     private int getRank(LoadKey key) {
-        DoubleValueNode<P> node = getRoot();
+        Node<P> node = getRoot();
         int rank = 0;
         while (!isALeaf(node)) {
-            DoubleValueNode<P> l = getLeft(node);
-            DoubleValueNode<P> m = getMid(node);
-            DoubleValueNode<P> r = getRight(node);
+            Node<P> l = getLeft(node);
+            Node<P> m = getMid(node);
+            Node<P> r = getRight(node);
             
             LoadKey lKey = getKey(l);
             LoadKey mKey = getKey(m);
@@ -177,12 +152,12 @@ public class DVNTreeI<P> extends DVNTree<P, LoadKey> {
     }
 
     private long getPrefixSum(LoadKey key) {
-        DoubleValueNode<P> node = getRoot();
+        Node<P> node = getRoot();
         long sum = 0;
         while (!isALeaf(node)) {
-            DoubleValueNode<P> l = getLeft(node);
-            DoubleValueNode<P> m = getMid(node);
-            DoubleValueNode<P> r = getRight(node);
+            Node<P> l = getLeft(node);
+            Node<P> m = getMid(node);
+            Node<P> r = getRight(node);
             
             LoadKey lKey = getKey(l);
             LoadKey mKey = getKey(m);

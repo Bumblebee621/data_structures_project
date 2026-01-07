@@ -1,12 +1,12 @@
-public class DoubleValueNode<P> {
-    protected DoubleValueNode<P> leftByValue;
-    protected DoubleValueNode<P> midByValue;
-    protected DoubleValueNode<P> rightByValue;
-    protected DoubleValueNode<P> parentByValue;
-    protected DoubleValueNode<P> leftById;
-    protected DoubleValueNode<P> midById;
-    protected DoubleValueNode<P> rightById;
-    protected DoubleValueNode<P> parentById;
+public class Node<P> {
+    protected Node<P> leftByValue;
+    protected Node<P> midByValue;
+    protected Node<P> rightByValue;
+    protected Node<P> parentByValue;
+    protected Node<P> leftById;
+    protected Node<P> midById;
+    protected Node<P> rightById;
+    protected Node<P> parentById;
     protected P person;
     protected String identifier;
     protected int value;
@@ -14,15 +14,15 @@ public class DoubleValueNode<P> {
     protected int leafCount;
     protected long subtreeValueSum;
 
-    public DoubleValueNode() {
+    public Node() {
         this(null, null, 0);
     }
 
-    public DoubleValueNode(P person, String identifier, int value) {
+    private Node(P person, String identifier, int value) {
         this(person, identifier, value, 0);
     }
 
-    public DoubleValueNode(P person, String identifier, int value, int insertionTime) {
+    public Node(P person, String identifier, int value, int insertionTime) {
         this.person = person;
         this.identifier = identifier;
         this.value = value;
@@ -48,29 +48,29 @@ public class DoubleValueNode<P> {
     }
 
     // Setters
-    public void setLeftByValue(DoubleValueNode<P> leftByValue) {
+    public void setLeftByValue(Node<P> leftByValue) {
         this.leftByValue = leftByValue;
     }
-    public void setMidByValue(DoubleValueNode<P> midByValue) {
+    public void setMidByValue(Node<P> midByValue) {
         this.midByValue = midByValue;
     }
-    public void setRightByValue(DoubleValueNode<P> rightByValue) {
+    public void setRightByValue(Node<P> rightByValue) {
         this.rightByValue = rightByValue;
     }
-    public void setParentByValue(DoubleValueNode<P> parentByValue) {
+    public void setParentByValue(Node<P> parentByValue) {
         this.parentByValue = parentByValue;
     }
 
-    public void setLeftById(DoubleValueNode<P> leftById) {
+    public void setLeftById(Node<P> leftById) {
         this.leftById = leftById;
     }
-    public void setMidById(DoubleValueNode<P> midById) {
+    public void setMidById(Node<P> midById) {
         this.midById = midById;
     }
-    public void setRightById(DoubleValueNode<P> rightById) {
+    public void setRightById(Node<P> rightById) {
         this.rightById = rightById;
     }
-    public void setParentById(DoubleValueNode<P> parentById) {
+    public void setParentById(Node<P> parentById) {
         this.parentById = parentById;
     }
 
@@ -94,29 +94,29 @@ public class DoubleValueNode<P> {
     }
 
     // Getters
-    public DoubleValueNode<P> getLeftByValue() {
+    public Node<P> getLeftByValue() {
         return leftByValue;
     }
-    public DoubleValueNode<P> getMidByValue() {
+    public Node<P> getMidByValue() {
         return midByValue;
     }
-    public DoubleValueNode<P> getRightByValue() {
+    public Node<P> getRightByValue() {
         return rightByValue;
     }
-    public DoubleValueNode<P> getParentByValue() {
+    public Node<P> getParentByValue() {
         return parentByValue;
     }
 
-    public DoubleValueNode<P> getLeftById() {
+    public Node<P> getLeftById() {
         return leftById;
     }
-    public DoubleValueNode<P> getMidById() {
+    public Node<P> getMidById() {
         return midById;
     }
-    public DoubleValueNode<P> getRightById() {
+    public Node<P> getRightById() {
         return rightById;
     }
-    public DoubleValueNode<P> getParentById() {
+    public Node<P> getParentById() {
         return parentById;
     }
 
