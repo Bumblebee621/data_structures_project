@@ -69,8 +69,7 @@ public class DVNTreeI<P> extends DVNTree<P, LoadKey> {
         }
     }
     
-    // Requested functions
-    
+
     public Node<P> findMinTimeStamp(int num) {
         return findNodeWithNum(num, true);
     }
