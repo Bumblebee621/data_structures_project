@@ -27,8 +27,8 @@ public class Node<P> {
         this.identifier = identifier;
         this.value = value;
         this.insertionTime = insertionTime;
-        this.leafCount = 1; // Default to 1 (leaf)
-        this.subtreeValueSum = value; // value is int, implicitly long
+        this.leafCount = 1;
+        this.subtreeValueSum = value;
         this.leftByValue = null;
         this.midByValue = null;
         this.rightByValue = null;

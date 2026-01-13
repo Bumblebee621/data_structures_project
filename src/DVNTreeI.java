@@ -84,37 +84,6 @@ public class DVNTreeI<P> extends DVNTree<P, LoadKey> {
             node.setSubtreeValueSum(sum);
         }
     }
-    public Node<P> findMinTimeStamp(int num) {
-        return findNodeWithNum(num, true);
-    }
-
-    public Node<P> findMaxTimeStamp(int num) {
-        return findNodeWithNum(num, false);
-    }
-    
-    private Node<P> findNodeWithNum(int num, boolean findMin) {
-        Node<P> node = getRoot();
-        LoadKey target = new LoadKey(num, findMin ? Integer.MIN_VALUE : Integer.MAX_VALUE);
-        
-        while (!isALeaf(node)) {
-            LoadKey lKey = getKey(getLeft(node));
-            LoadKey mKey = getKey(getMid(node));
-            
-            if (target.compareTo(lKey) <= 0) {
-                node = getLeft(node);
-            } else if (target.compareTo(mKey) <= 0) {
-                node = getMid(node);
-            } else {
-                node = getRight(node);
-            }
-        }
-        
-        // At leaf, check if num matches
-        if (node.getValue() == num) {
-            return node;
-        }
-        return null;
-    }
 
     public int numDoctorsWithLoadInRange(int a, int b) {
         if (a > b) return 0;

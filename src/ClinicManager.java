@@ -35,7 +35,6 @@ public class ClinicManager {
             popularityTree.delete(dNode);
         }
     }
-
     public void patientEnter(String doctorId, String patientId) {
         if (doctorsTree.search(doctorsTree.getRoot(), doctorId) == null ||
                 patients.search(patients.getRoot(), patientId) != null){
@@ -47,11 +46,11 @@ public class ClinicManager {
             Node<Patient> pNode = new Node<>(p, patientId, d.getAndPlusLastestNum(), 0);
             patients.insert(pNode);
             d.getQueue().insert(pNode);
-            updatePopularityTree(dNode);
             if(dNode.getValue() == 0){
-              dNode.getPerson().setNextPatientId(patientId);
+                dNode.getPerson().setNextPatientId(patientId);
             }
             dNode.setValue(dNode.getValue()+1);
+            updatePopularityTree(dNode);
         }
     }
 
@@ -65,6 +64,7 @@ public class ClinicManager {
                 throw new IllegalArgumentException();
             }
             doctorNode.getPerson().getQueue().delete(pNode);
+            patients.delete(pNode);
             doctorNode.setValue(doctorNode.getValue()-1);
             updatePopularityTree(doctorNode);
             if (doctorNode.getValue() == 0) {
@@ -86,7 +86,7 @@ public class ClinicManager {
             dNode.setValue(dNode.getValue()-1);
             dNode.getPerson().getQueue().delete(pNode);
             updatePopularityTree(dNode);
-            if(dNode.getPerson().getNextPatientId().equals(patientId)){
+            if(dNode.getPerson().getNextPatientId() != null && dNode.getPerson().getNextPatientId().equals(patientId)){
                 Node<Patient> nextPatientNode2 = dNode.getPerson().getQueue().minimum();
                 if(nextPatientNode2 == null){
                     dNode.getPerson().setNextPatientId(null);
@@ -140,6 +140,7 @@ public class ClinicManager {
     public void updatePopularityTree(Node<Doctor> dNode){
         globalInsertionTime++;
         dNode.setInsertionTime(globalInsertionTime);
+        dNode.setSubtreeValueSum(dNode.getValue());
         popularityTree.delete(dNode);
         popularityTree.insert(dNode);
     }

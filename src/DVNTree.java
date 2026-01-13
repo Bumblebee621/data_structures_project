@@ -5,40 +5,35 @@ public abstract class DVNTree<P, K extends Comparable<K>> {
 
     public DVNTree(K leftSentinelValue, K rightSentinelValue) {
         this.root = new Node<>();
+        this.leftSentinelValue = leftSentinelValue;
+        this.rightSentinelValue = rightSentinelValue;
         Node<P> leftSentinel = createSentinel(leftSentinelValue);
         Node<P> rightSentinel = createSentinel(rightSentinelValue);
+        updateStats(leftSentinel);
+        updateStats(rightSentinel);
         this.setChildren(root, leftSentinel, rightSentinel, null);
         setParent(leftSentinel, root);
         setParent(rightSentinel, root);
         this.updateKey(root);
-        this.leftSentinelValue = leftSentinelValue;
-        this.rightSentinelValue = rightSentinelValue;
+        updateStats(root);
     }
 
     protected abstract Node<P> createSentinel(K value);
 
     // Abstract Accessors
     protected abstract Node<P> getLeft(Node<P> node);
-
     protected abstract Node<P> getMid(Node<P> node);
-
     protected abstract Node<P> getRight(Node<P> node);
-
     protected abstract Node<P> getParent(Node<P> node);
-
     protected abstract K getKey(Node<P> node);
 
     protected abstract boolean isALeaf(Node<P> node);
 
     // Abstract Mutators
     protected abstract void setLeft(Node<P> node, Node<P> child);
-
     protected abstract void setMid(Node<P> node, Node<P> child);
-
     protected abstract void setRight(Node<P> node, Node<P> child);
-
     protected abstract void setParent(Node<P> node, Node<P> parent);
-
     protected abstract void setKey(Node<P> node, K key);
 
     // Abstract Stats Update
@@ -46,6 +41,9 @@ public abstract class DVNTree<P, K extends Comparable<K>> {
 
 
     public Node<P> search(Node<P> node, K value) {
+        if(node == null){
+            return null;
+        }
         if (isALeaf(node)) {
             if (getKey(node).compareTo(value) == 0) {
                 return node;
@@ -123,7 +121,6 @@ public abstract class DVNTree<P, K extends Comparable<K>> {
         Node<P> l = getLeft(x);
         Node<P> m = getMid(x);
         Node<P> r = getRight(x);
-        Node<P> y = new Node<>();
 
         K zKey = getKey(z);
 
@@ -137,6 +134,7 @@ public abstract class DVNTree<P, K extends Comparable<K>> {
             }
             return null;
         }
+        Node<P> y = new Node<>();
         if (zKey.compareTo(getKey(l)) < 0) {
             setChildren(x, z, l, null);
             setChildren(y, m, r, null);
