@@ -122,16 +122,36 @@ public class Main {
         ClinicManager cm = new ClinicManager();
         StringBuilder sb = new StringBuilder();
 
-        try { int res1 = cm.numDoctorsWithLoadInRange(0, 10); sb.append("numDoctorsWithLoadInRange 0 10 -> ").append(res1); } catch (Exception e) { sb.append("numDoctorsWithLoadInRange 0 10 -> EXCEPTION"); }
+        try {
+            int res1 = cm.numDoctorsWithLoadInRange(0, 10);
+            sb.append("numDoctorsWithLoadInRange 0 10 -> ").append(res1);
+        } catch (Exception e) {
+            sb.append("numDoctorsWithLoadInRange 0 10 -> EXCEPTION");
+        }
         sb.append(", ");
-        try { int res2 = cm.averageLoadWithinRange(0, 10); sb.append("averageLoadWithinRange 0 10 -> ").append(res2); } catch (Exception e) { sb.append("averageLoadWithinRange 0 10 -> EXCEPTION"); }
+        try {
+            int res2 = cm.averageLoadWithinRange(0, 10);
+            sb.append("averageLoadWithinRange 0 10 -> ").append(res2);
+        } catch (Exception e) {
+            sb.append("averageLoadWithinRange 0 10 -> EXCEPTION");
+        }
         sb.append(", ");
-        try { cm.doctorLeave("D1"); sb.append("doctorLeave D1"); } catch (IllegalArgumentException e) { sb.append("doctorLeave D1 -> ILLEGAL"); }
+        try {
+            cm.doctorLeave("D1");
+            sb.append("doctorLeave D1");
+        } catch (IllegalArgumentException e) {
+            sb.append("doctorLeave D1 -> ILLEGAL");
+        }
         sb.append(", ");
-        try { String res3 = cm.nextPatient("D1"); sb.append("nextPatient D1 -> ").append(res3); } catch (IllegalArgumentException e) { sb.append("nextPatient D1 -> ILLEGAL"); }
+        try {
+            String res3 = cm.nextPatient("D1");
+            sb.append("nextPatient D1 -> ").append(res3);
+        } catch (IllegalArgumentException e) {
+            sb.append("nextPatient D1 -> ILLEGAL");
+        }
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -142,14 +162,22 @@ public class Main {
 
         cm.doctorEnter("D1");
         sb.append("doctorEnter D1, ");
-        int res1 = cm.numPatients("D1"); sb.append("numPatients D1 -> ").append(res1).append(", ");
-        try { String res2 = cm.nextPatient("D1"); sb.append("nextPatient D1 -> ").append(res2); } catch (IllegalArgumentException e) { sb.append("nextPatient D1 -> ILLEGAL"); }
+        int res1 = cm.numPatients("D1");
+        sb.append("numPatients D1 -> ").append(res1).append(", ");
+        try {
+            String res2 = cm.nextPatient("D1");
+            sb.append("nextPatient D1 -> ").append(res2);
+        } catch (IllegalArgumentException e) {
+            sb.append("nextPatient D1 -> ILLEGAL");
+        }
         sb.append(", ");
-        int res3 = cm.numDoctorsWithLoadInRange(0, 0); sb.append("numDoctorsWithLoadInRange 0 0 -> ").append(res3).append(", ");
-        cm.doctorLeave("D1"); sb.append("doctorLeave D1");
+        int res3 = cm.numDoctorsWithLoadInRange(0, 0);
+        sb.append("numDoctorsWithLoadInRange 0 0 -> ").append(res3).append(", ");
+        cm.doctorLeave("D1");
+        sb.append("doctorLeave D1");
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -190,11 +218,13 @@ public class Main {
         sb.append("patientEnter D4 P42, ");
         cm.patientEnter("D4", "P43");
         sb.append("patientEnter D4 P43, ");
-        int res1 = cm.numDoctorsWithLoadInRange(3, 3); sb.append("numDoctorsWithLoadInRange 3 3 -> ").append(res1).append(", ");
-        int res2 = cm.averageLoadWithinRange(3, 3); sb.append("averageLoadWithinRange 3 3 -> ").append(res2);
+        int res1 = cm.numDoctorsWithLoadInRange(3, 3);
+        sb.append("numDoctorsWithLoadInRange 3 3 -> ").append(res1).append(", ");
+        int res2 = cm.averageLoadWithinRange(3, 3);
+        sb.append("averageLoadWithinRange 3 3 -> ").append(res2);
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -233,11 +263,13 @@ public class Main {
         cm.doctorEnter("D10");
         cm.patientEnter("D10", "P10");
         sb.append("doctorEnter D10, patientEnter D10 P10, ");
-        int res1 = cm.numDoctorsWithLoadInRange(1, 1); sb.append("numDoctorsWithLoadInRange 1 1 -> ").append(res1).append(", ");
-        int res2 = cm.averageLoadWithinRange(0, 10); sb.append("averageLoadWithinRange 0 10 -> ").append(res2);
+        int res1 = cm.numDoctorsWithLoadInRange(1, 1);
+        sb.append("numDoctorsWithLoadInRange 1 1 -> ").append(res1).append(", ");
+        int res2 = cm.averageLoadWithinRange(0, 10);
+        sb.append("averageLoadWithinRange 0 10 -> ").append(res2);
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -299,14 +331,17 @@ public class Main {
         cm.patientEnter("D1", "P49");
         cm.patientEnter("D1", "P50");
         sb.append("added 50 patients, ");
-        int res1 = cm.numPatients("D1"); sb.append("numPatients D1 -> ").append(res1).append(", ");
-        int res2 = cm.numDoctorsWithLoadInRange(50, 50); sb.append("numDoctorsWithLoadInRange 50 50 -> ").append(res2).append(", ");
+        int res1 = cm.numPatients("D1");
+        sb.append("numPatients D1 -> ").append(res1).append(", ");
+        int res2 = cm.numDoctorsWithLoadInRange(50, 50);
+        sb.append("numDoctorsWithLoadInRange 50 50 -> ").append(res2).append(", ");
         for (int i = 0; i < 50; i++) cm.nextPatientLeave("D1");
         sb.append("removed all patients, ");
-        int res3 = cm.numPatients("D1"); sb.append("numPatients D1 -> ").append(res3);
+        int res3 = cm.numPatients("D1");
+        sb.append("numPatients D1 -> ").append(res3);
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -322,14 +357,19 @@ public class Main {
         cm.patientEnter("D1", "P4");
         cm.patientEnter("D1", "P5");
         sb.append("added 5 patients, ");
-        cm.patientLeaveEarly("P3"); sb.append("patientLeaveEarly P3, ");
-        int res1 = cm.numPatients("D1"); sb.append("numPatients D1 -> ").append(res1).append(", ");
-        String res2 = cm.nextPatient("D1"); sb.append("nextPatient D1 -> ").append(res2).append(", ");
-        cm.patientLeaveEarly("P1"); sb.append("patientLeaveEarly P1, ");
-        String res3 = cm.nextPatient("D1"); sb.append("nextPatient D1 -> ").append(res3);
+        cm.patientLeaveEarly("P3");
+        sb.append("patientLeaveEarly P3, ");
+        int res1 = cm.numPatients("D1");
+        sb.append("numPatients D1 -> ").append(res1).append(", ");
+        String res2 = cm.nextPatient("D1");
+        sb.append("nextPatient D1 -> ").append(res2).append(", ");
+        cm.patientLeaveEarly("P1");
+        sb.append("patientLeaveEarly P1, ");
+        String res3 = cm.nextPatient("D1");
+        sb.append("nextPatient D1 -> ").append(res3);
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -339,19 +379,28 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         cm.doctorEnter("D0");
-        cm.doctorEnter("D1"); cm.patientEnter("D1", "P1");
-        cm.doctorEnter("D5"); for (int i = 0; i < 5; i++) cm.patientEnter("D5", "P5_" + i);
-        cm.doctorEnter("D10"); for (int i = 0; i < 10; i++) cm.patientEnter("D10", "P10_" + i);
+        cm.doctorEnter("D1");
+        cm.patientEnter("D1", "P1");
+        cm.doctorEnter("D5");
+        for (int i = 0; i < 5; i++) cm.patientEnter("D5", "P5_" + i);
+        cm.doctorEnter("D10");
+        for (int i = 0; i < 10; i++) cm.patientEnter("D10", "P10_" + i);
         sb.append("setup complete, ");
-        int res1 = cm.numDoctorsWithLoadInRange(0, 0); sb.append("range [0,0] -> ").append(res1).append(", ");
-        int res2 = cm.numDoctorsWithLoadInRange(1, 1); sb.append("range [1,1] -> ").append(res2).append(", ");
-        int res3 = cm.numDoctorsWithLoadInRange(0, 5); sb.append("range [0,5] -> ").append(res3).append(", ");
-        int res4 = cm.numDoctorsWithLoadInRange(6, 10); sb.append("range [6,10] -> ").append(res4).append(", ");
-        int res5 = cm.numDoctorsWithLoadInRange(0, 100); sb.append("range [0,100] -> ").append(res5).append(", ");
-        int res6 = cm.averageLoadWithinRange(0, 10); sb.append("avg [0,10] -> ").append(res6);
+        int res1 = cm.numDoctorsWithLoadInRange(0, 0);
+        sb.append("range [0,0] -> ").append(res1).append(", ");
+        int res2 = cm.numDoctorsWithLoadInRange(1, 1);
+        sb.append("range [1,1] -> ").append(res2).append(", ");
+        int res3 = cm.numDoctorsWithLoadInRange(0, 5);
+        sb.append("range [0,5] -> ").append(res3).append(", ");
+        int res4 = cm.numDoctorsWithLoadInRange(6, 10);
+        sb.append("range [6,10] -> ").append(res4).append(", ");
+        int res5 = cm.numDoctorsWithLoadInRange(0, 100);
+        sb.append("range [0,100] -> ").append(res5).append(", ");
+        int res6 = cm.averageLoadWithinRange(0, 10);
+        sb.append("avg [0,10] -> ").append(res6);
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -381,10 +430,11 @@ public class Main {
         sb.append("removed 200 patients, ");
         cm.doctorLeave("D3");
         sb.append("cycle 3 complete, ");
-        int res1 = cm.numDoctorsWithLoadInRange(0, 100); sb.append("final doctors -> ").append(res1);
+        int res1 = cm.numDoctorsWithLoadInRange(0, 100);
+        sb.append("final doctors -> ").append(res1);
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -396,22 +446,57 @@ public class Main {
         cm.doctorEnter("D1");
         cm.patientEnter("D1", "P1");
         sb.append("setup, ");
-        try { cm.doctorLeave("D999"); sb.append("doctorLeave D999"); } catch (IllegalArgumentException e) { sb.append("doctorLeave D999 -> ILLEGAL"); }
+        try {
+            cm.doctorLeave("D999");
+            sb.append("doctorLeave D999");
+        } catch (IllegalArgumentException e) {
+            sb.append("doctorLeave D999 -> ILLEGAL");
+        }
         sb.append(", ");
-        try { cm.doctorLeave("D1"); sb.append("doctorLeave D1 (has patients)"); } catch (IllegalArgumentException e) { sb.append("doctorLeave D1 (has patients) -> ILLEGAL"); }
+        try {
+            cm.doctorLeave("D1");
+            sb.append("doctorLeave D1 (has patients)");
+        } catch (IllegalArgumentException e) {
+            sb.append("doctorLeave D1 (has patients) -> ILLEGAL");
+        }
         sb.append(", ");
-        try { cm.nextPatientLeave("D999"); sb.append("nextPatientLeave D999"); } catch (IllegalArgumentException e) { sb.append("nextPatientLeave D999 -> ILLEGAL"); }
+        try {
+            cm.nextPatientLeave("D999");
+            sb.append("nextPatientLeave D999");
+        } catch (IllegalArgumentException e) {
+            sb.append("nextPatientLeave D999 -> ILLEGAL");
+        }
         sb.append(", ");
-        try { cm.nextPatient("D999"); sb.append("nextPatient D999"); } catch (IllegalArgumentException e) { sb.append("nextPatient D999 -> ILLEGAL"); }
+        try {
+            cm.nextPatient("D999");
+            sb.append("nextPatient D999");
+        } catch (IllegalArgumentException e) {
+            sb.append("nextPatient D999 -> ILLEGAL");
+        }
         sb.append(", ");
-        try { cm.patientLeaveEarly("P999"); sb.append("patientLeaveEarly P999"); } catch (IllegalArgumentException e) { sb.append("patientLeaveEarly P999 -> ILLEGAL"); }
+        try {
+            cm.patientLeaveEarly("P999");
+            sb.append("patientLeaveEarly P999");
+        } catch (IllegalArgumentException e) {
+            sb.append("patientLeaveEarly P999 -> ILLEGAL");
+        }
         sb.append(", ");
-        try { String res = cm.waitingForDoctor("P999"); sb.append("waitingForDoctor P999 -> ").append(res); } catch (IllegalArgumentException e) { sb.append("waitingForDoctor P999 -> ILLEGAL"); }
+        try {
+            String res = cm.waitingForDoctor("P999");
+            sb.append("waitingForDoctor P999 -> ").append(res);
+        } catch (IllegalArgumentException e) {
+            sb.append("waitingForDoctor P999 -> ILLEGAL");
+        }
         sb.append(", ");
-        try { int res = cm.numPatients("D999"); sb.append("numPatients D999 -> ").append(res); } catch (IllegalArgumentException e) { sb.append("numPatients D999 -> ILLEGAL"); }
+        try {
+            int res = cm.numPatients("D999");
+            sb.append("numPatients D999 -> ").append(res);
+        } catch (IllegalArgumentException e) {
+            sb.append("numPatients D999 -> ILLEGAL");
+        }
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -421,15 +506,20 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         cm.doctorEnter("D0");
-        cm.doctorEnter("D1"); cm.patientEnter("D1", "P1");
-        cm.doctorEnter("D100"); for (int i = 0; i < 100; i++) cm.patientEnter("D100", "P100_" + i);
+        cm.doctorEnter("D1");
+        cm.patientEnter("D1", "P1");
+        cm.doctorEnter("D100");
+        for (int i = 0; i < 100; i++) cm.patientEnter("D100", "P100_" + i);
         sb.append("setup, ");
-        int res1 = cm.averageLoadWithinRange(0, 100); sb.append("avg [0,100] -> ").append(res1).append(", ");
-        int res2 = cm.numDoctorsWithLoadInRange(0, 1); sb.append("range [0,1] -> ").append(res2).append(", ");
-        int res3 = cm.numDoctorsWithLoadInRange(100, 100); sb.append("range [100,100] -> ").append(res3);
+        int res1 = cm.averageLoadWithinRange(0, 100);
+        sb.append("avg [0,100] -> ").append(res1).append(", ");
+        int res2 = cm.numDoctorsWithLoadInRange(0, 1);
+        sb.append("range [0,1] -> ").append(res2).append(", ");
+        int res3 = cm.numDoctorsWithLoadInRange(100, 100);
+        sb.append("range [100,100] -> ").append(res3);
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -449,13 +539,23 @@ public class Main {
         }
 
         for (int i = 1; i <= 20; i++) {
-            try { cm.doctorEnter("D" + i); sb.append("doctorEnter D").append(i); } catch (IllegalArgumentException e) { sb.append("doctorEnter D").append(i).append(" -> ILLEGAL"); }
+            try {
+                cm.doctorEnter("D" + i);
+                sb.append("doctorEnter D").append(i);
+            } catch (IllegalArgumentException e) {
+                sb.append("doctorEnter D").append(i).append(" -> ILLEGAL");
+            }
             sb.append(", ");
         }
 
         for (int i = 1; i <= 15; i++) {
             for (int j = 1; j <= 3; j++) {
-                try { cm.patientEnter("D" + i, "P" + i + "_" + j); sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j); } catch (IllegalArgumentException e) { sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j).append(" -> ILLEGAL"); }
+                try {
+                    cm.patientEnter("D" + i, "P" + i + "_" + j);
+                    sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j);
+                } catch (IllegalArgumentException e) {
+                    sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j).append(" -> ILLEGAL");
+                }
                 sb.append(", ");
             }
         }
@@ -463,13 +563,23 @@ public class Main {
         for (int i = 1; i <= 10; i++) {
             int targetDoc = (i % 15) + 1;
             if (targetDoc != i) {
-                try { cm.patientEnter("D" + targetDoc, "P" + i + "_1"); sb.append("patientEnter D").append(targetDoc).append(" P").append(i).append("_1"); } catch (IllegalArgumentException e) { sb.append("patientEnter D").append(targetDoc).append(" P").append(i).append("_1 -> ILLEGAL"); }
+                try {
+                    cm.patientEnter("D" + targetDoc, "P" + i + "_1");
+                    sb.append("patientEnter D").append(targetDoc).append(" P").append(i).append("_1");
+                } catch (IllegalArgumentException e) {
+                    sb.append("patientEnter D").append(targetDoc).append(" P").append(i).append("_1 -> ILLEGAL");
+                }
                 sb.append(", ");
             }
         }
 
         for (int i = 100; i <= 110; i++) {
-            try { cm.doctorLeave("D" + i); sb.append("doctorLeave D").append(i); } catch (IllegalArgumentException e) { sb.append("doctorLeave D").append(i).append(" -> ILLEGAL"); }
+            try {
+                cm.doctorLeave("D" + i);
+                sb.append("doctorLeave D").append(i);
+            } catch (IllegalArgumentException e) {
+                sb.append("doctorLeave D").append(i).append(" -> ILLEGAL");
+            }
             sb.append(", ");
         }
 
@@ -481,57 +591,100 @@ public class Main {
         }
 
         for (int i = 1; i <= 3; i++) {
-            try { cm.doctorLeave("D" + i); sb.append("doctorLeave D").append(i); } catch (IllegalArgumentException e) { sb.append("doctorLeave D").append(i).append(" -> ILLEGAL"); }
+            try {
+                cm.doctorLeave("D" + i);
+                sb.append("doctorLeave D").append(i);
+            } catch (IllegalArgumentException e) {
+                sb.append("doctorLeave D").append(i).append(" -> ILLEGAL");
+            }
             sb.append(", ");
         }
 
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 3; j++) {
-                try { String res = cm.waitingForDoctor("P" + i + "_" + j); sb.append("waitingForDoctor P").append(i).append("_").append(j).append(" -> ").append(res); } catch (IllegalArgumentException e) { sb.append("waitingForDoctor P").append(i).append("_").append(j).append(" -> ILLEGAL"); }
+                try {
+                    String res = cm.waitingForDoctor("P" + i + "_" + j);
+                    sb.append("waitingForDoctor P").append(i).append("_").append(j).append(" -> ").append(res);
+                } catch (IllegalArgumentException e) {
+                    sb.append("waitingForDoctor P").append(i).append("_").append(j).append(" -> ILLEGAL");
+                }
                 sb.append(", ");
             }
         }
 
         for (int i = 1; i <= 3; i++) {
-            try { cm.doctorEnter("D" + i); sb.append("doctorEnter D").append(i); } catch (IllegalArgumentException e) { sb.append("doctorEnter D").append(i).append(" -> ILLEGAL"); }
+            try {
+                cm.doctorEnter("D" + i);
+                sb.append("doctorEnter D").append(i);
+            } catch (IllegalArgumentException e) {
+                sb.append("doctorEnter D").append(i).append(" -> ILLEGAL");
+            }
             sb.append(", ");
         }
 
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 2; j++) {
-                try { cm.patientEnter("D" + i, "P" + i + "_" + j); sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j); } catch (IllegalArgumentException e) { sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j).append(" -> ILLEGAL"); }
+                try {
+                    cm.patientEnter("D" + i, "P" + i + "_" + j);
+                    sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j);
+                } catch (IllegalArgumentException e) {
+                    sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j).append(" -> ILLEGAL");
+                }
                 sb.append(", ");
             }
         }
 
         for (int i = 1; i <= 3; i++) {
-            try { cm.doctorEnter("D" + i); sb.append("doctorEnter D").append(i); } catch (IllegalArgumentException e) { sb.append("doctorEnter D").append(i).append(" -> ILLEGAL"); }
+            try {
+                cm.doctorEnter("D" + i);
+                sb.append("doctorEnter D").append(i);
+            } catch (IllegalArgumentException e) {
+                sb.append("doctorEnter D").append(i).append(" -> ILLEGAL");
+            }
             sb.append(", ");
         }
 
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 2; j++) {
-                try { cm.patientEnter("D" + i, "P" + i + "_" + j); sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j); } catch (IllegalArgumentException e) { sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j).append(" -> ILLEGAL"); }
+                try {
+                    cm.patientEnter("D" + i, "P" + i + "_" + j);
+                    sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j);
+                } catch (IllegalArgumentException e) {
+                    sb.append("patientEnter D").append(i).append(" P").append(i).append("_").append(j).append(" -> ILLEGAL");
+                }
                 sb.append(", ");
             }
         }
 
         for (int i = 200; i <= 210; i++) {
-            try { String res = cm.waitingForDoctor("P" + i); sb.append("waitingForDoctor P").append(i).append(" -> ").append(res); } catch (IllegalArgumentException e) { sb.append("waitingForDoctor P").append(i).append(" -> ILLEGAL"); }
+            try {
+                String res = cm.waitingForDoctor("P" + i);
+                sb.append("waitingForDoctor P").append(i).append(" -> ").append(res);
+            } catch (IllegalArgumentException e) {
+                sb.append("waitingForDoctor P").append(i).append(" -> ILLEGAL");
+            }
             sb.append(", ");
         }
 
         for (int i = 50; i <= 60; i++) {
-            try { int res = cm.numPatients("D" + i); sb.append("numPatients D").append(i).append(" -> ").append(res); } catch (IllegalArgumentException e) { sb.append("numPatients D").append(i).append(" -> ILLEGAL"); }
+            try {
+                int res = cm.numPatients("D" + i);
+                sb.append("numPatients D").append(i).append(" -> ").append(res);
+            } catch (IllegalArgumentException e) {
+                sb.append("numPatients D").append(i).append(" -> ILLEGAL");
+            }
             sb.append(", ");
         }
 
-        int res1 = cm.numDoctorsWithLoadInRange(0, 10); sb.append("numDoctorsWithLoadInRange 0 10 -> ").append(res1).append(", ");
-        int res2 = cm.numPatients("D5"); sb.append("numPatients D5 -> ").append(res2).append(", ");
-        String res3 = cm.waitingForDoctor("P5_1"); sb.append("waitingForDoctor P5_1 -> ").append(res3);
+        int res1 = cm.numDoctorsWithLoadInRange(0, 10);
+        sb.append("numDoctorsWithLoadInRange 0 10 -> ").append(res1).append(", ");
+        int res2 = cm.numPatients("D5");
+        sb.append("numPatients D5 -> ").append(res2).append(", ");
+        String res3 = cm.waitingForDoctor("P5_1");
+        sb.append("waitingForDoctor P5_1 -> ").append(res3);
 
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -1241,7 +1394,7 @@ public class Main {
         }
         sb.append(", ");
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -2651,7 +2804,7 @@ public class Main {
         }
         sb.append(", ");
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -4761,7 +4914,7 @@ public class Main {
         }
         sb.append(", ");
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -7571,7 +7724,7 @@ public class Main {
         }
         sb.append(", ");
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -11081,7 +11234,7 @@ public class Main {
         }
         sb.append(", ");
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -15291,7 +15444,7 @@ public class Main {
         }
         sb.append(", ");
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -20901,7 +21054,7 @@ public class Main {
         }
         sb.append(", ");
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 
@@ -27911,7 +28064,7 @@ public class Main {
         }
         sb.append(", ");
         String result = sb.toString();
-        if (result.endsWith(", ")) result = result.substring(0, result.length()-2);
+        if (result.endsWith(", ")) result = result.substring(0, result.length() - 2);
         System.out.println(result);
     }
 

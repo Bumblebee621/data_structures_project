@@ -41,11 +41,27 @@ public class DVNTreeI<P> extends DVNTree<P, LoadKey> {
         node.setValue(key.getNum());
         node.setInsertionTime(key.getTimeStamp());
     }
+    @Override
     protected void updateStats(Node<P> node) {
         if (isALeaf(node)) {
-            node.setLeafCount(1);
-            node.setSubtreeValueSum(node.getValue());
+            LoadKey key = getKey(node);
+
+            // Check if this node is one of the sentinels
+            // We use 'this.leftSentinelValue' inherited from DVNTree
+            boolean isLeftSentinel = key.compareTo(this.leftSentinelValue) == 0;
+            boolean isRightSentinel = key.compareTo(this.rightSentinelValue) == 0;
+
+            if (isLeftSentinel || isRightSentinel) {
+                // Sentinels contribute NOTHING to the rank or sum
+                node.setLeafCount(0);
+                node.setSubtreeValueSum(0);
+            } else {
+                // Real data nodes contribute 1 to rank and their value to sum
+                node.setLeafCount(1);
+                node.setSubtreeValueSum(node.getValue());
+            }
         } else {
+            // Internal nodes sum up the stats of their children
             int size = 0;
             long sum = 0;
             Node<P> l = getLeft(node);
@@ -68,8 +84,6 @@ public class DVNTreeI<P> extends DVNTree<P, LoadKey> {
             node.setSubtreeValueSum(sum);
         }
     }
-    
-
     public Node<P> findMinTimeStamp(int num) {
         return findNodeWithNum(num, true);
     }

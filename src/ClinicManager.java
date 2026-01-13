@@ -1,8 +1,8 @@
 public class ClinicManager {
     public static final String MIN_ID = "";
     public static final String MAX_ID = "\uFFFF\uFFFF\uFFFF\uFFFF";
-    public static final int MIN_num = 0;
-    public static final int MAX_num = 2 ^ 32 - 1; // Note: 2^32 in java is not 2 power 32. But keeping as is.
+    public static final int MIN_num = -1;
+    public static final int MAX_num = Integer.MAX_VALUE;
     
     private DVNTreeS<Doctor> doctorsTree;
     private DVNTreeI<Doctor> popularityTree;
@@ -28,7 +28,7 @@ public class ClinicManager {
 
     public void doctorLeave(String doctorId) {
         Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
-        if(dNode == null){
+        if(dNode == null || dNode.getValue() != 0){
             throw new IllegalArgumentException();
         } else{
             doctorsTree.delete(dNode);
@@ -48,9 +48,10 @@ public class ClinicManager {
             patients.insert(pNode);
             d.getQueue().insert(pNode);
             updatePopularityTree(dNode);
-            if(dNode.getValue() == 0 ){
+            if(dNode.getValue() == 0){
               dNode.getPerson().setNextPatientId(patientId);
             }
+            dNode.setValue(dNode.getValue()+1);
         }
     }
 
@@ -60,6 +61,9 @@ public class ClinicManager {
             throw new IllegalArgumentException();
         } else {
             Node<Patient> pNode = doctorNode.getPerson().getQueue().minimum();
+            if (pNode == null){
+                throw new IllegalArgumentException();
+            }
             doctorNode.getPerson().getQueue().delete(pNode);
             doctorNode.setValue(doctorNode.getValue()-1);
             updatePopularityTree(doctorNode);
@@ -80,10 +84,15 @@ public class ClinicManager {
         } else {
             Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), pNode.getPerson().getDoctorId());
             dNode.setValue(dNode.getValue()-1);
+            dNode.getPerson().getQueue().delete(pNode);
             updatePopularityTree(dNode);
-            if(dNode.getPerson().getNextPatientId().equals( patientId)){
-                Node<Patient> nextPatientNode = dNode.getPerson().getQueue().minimum();
-                dNode.getPerson().setNextPatientId(nextPatientNode.getPerson().getPatientId());
+            if(dNode.getPerson().getNextPatientId().equals(patientId)){
+                Node<Patient> nextPatientNode2 = dNode.getPerson().getQueue().minimum();
+                if(nextPatientNode2 == null){
+                    dNode.getPerson().setNextPatientId(null);
+                }else{
+                    dNode.getPerson().setNextPatientId(nextPatientNode2.getPerson().getPatientId());
+                }
             }
             patients.delete(pNode);
         }
@@ -101,10 +110,14 @@ public class ClinicManager {
 
     public String nextPatient(String doctorId) {
         Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
-        if(dNode.getPerson().getNextPatientId() == null){
+        if(dNode == null){
             throw new IllegalArgumentException();
         }
-        return dNode.getPerson().getNextPatientId();
+        String p1 = dNode.getPerson().getNextPatientId();
+        if (p1 == null){
+            throw new IllegalArgumentException();
+        }
+        return p1;
     }
 
     public String waitingForDoctor(String patientId) {
