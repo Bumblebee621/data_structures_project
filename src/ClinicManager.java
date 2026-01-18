@@ -16,6 +16,9 @@ public class ClinicManager {
     }
 
     public void doctorEnter(String doctorId) {
+        if(doctorId == null){
+            throw new IllegalArgumentException();
+        }
         if(doctorsTree.search(doctorsTree.getRoot(), doctorId) != null){
             throw new IllegalArgumentException();
         }else{
@@ -27,6 +30,9 @@ public class ClinicManager {
     }
 
     public void doctorLeave(String doctorId) {
+        if(doctorId == null){
+            throw new IllegalArgumentException();
+        }
         Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
         if(dNode == null || dNode.getValue() != 0){
             throw new IllegalArgumentException();
@@ -36,6 +42,9 @@ public class ClinicManager {
         }
     }
     public void patientEnter(String doctorId, String patientId) {
+        if(doctorId == null || patientId == null){
+            throw new IllegalArgumentException();
+        }
         if (doctorsTree.search(doctorsTree.getRoot(), doctorId) == null ||
                 patients.search(patients.getRoot(), patientId) != null){
             throw new IllegalArgumentException();
@@ -55,6 +64,9 @@ public class ClinicManager {
     }
 
     public String nextPatientLeave(String doctorId) {
+        if(doctorId == null){
+            throw new IllegalArgumentException();
+        }
         Node<Doctor> doctorNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
         if (doctorNode == null) {
             throw new IllegalArgumentException();
@@ -78,6 +90,9 @@ public class ClinicManager {
     }
 
     public void patientLeaveEarly(String patientId) {
+        if(patientId == null){
+            throw new IllegalArgumentException();
+        }
         Node<Patient> pNode = patients.search(patients.getRoot(), patientId);
         if(pNode == null){
             throw new IllegalArgumentException();
@@ -100,6 +115,9 @@ public class ClinicManager {
     }
 
     public int numPatients(String doctorId) {
+        if(doctorId == null){
+            throw new IllegalArgumentException();
+        }
         Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
         if(dNode == null){
             throw new IllegalArgumentException();
@@ -109,6 +127,9 @@ public class ClinicManager {
     }
 
     public String nextPatient(String doctorId) {
+        if(doctorId == null){
+            throw new IllegalArgumentException();
+        }
         Node<Doctor> dNode = doctorsTree.search(doctorsTree.getRoot(), doctorId);
         if(dNode == null){
             throw new IllegalArgumentException();
@@ -121,6 +142,9 @@ public class ClinicManager {
     }
 
     public String waitingForDoctor(String patientId) {
+        if(patientId == null){
+            throw new IllegalArgumentException();
+        }
         Node<Patient> pNode = patients.search(patients.getRoot(), patientId);
         if(pNode == null){
             throw new IllegalArgumentException();
