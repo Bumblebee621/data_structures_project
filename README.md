@@ -1,6 +1,6 @@
 # Clinic Management System
 
-A high-performance system for managing doctors and patients using an efficient dual-index data structure.
+A high-performance system for managing doctors and patients using an efficient dual-index data structure. We've implemented a node object that can co-exists in 2 trees simultaneously and independently.
 
 ## Core Architecture: "Single Node, Dual Existence"
 
